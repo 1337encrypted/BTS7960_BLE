@@ -4,9 +4,7 @@ BTS7960TH9x car;                                   //Create an object of class c
 uint8_t key;                                  //Key for the switch case
   
 void setup(){
-  
   Serial.begin(9600); 
-  
 }
 
 void loop()
