@@ -11,16 +11,15 @@
 #ifndef BTS7960_BLE_H
 #define BTS7960_BLE_H
 
-#include <IBusBM.h>
-#include <Arduino.h>
+//#define <Arduino.h>
 
-class BTS7960TH9x
+class BTS7960_BLE
 {
   private:
 
   //LED pins for function feedback
-  #define redLed = A0;
-  #define blueLed = A1;
+  #define redLed A0
+  #define blueLed A1
   
   //Enable pins for the motor driver
   #define R_EN1 2
@@ -42,7 +41,7 @@ class BTS7960TH9x
 
   volatile int Speed;                 //volatile as it shouldn't be ignored by the compiler, speed variable to control the speed
 
-  inline BTS7960TH9x() __attribute__((always_inline));
+  inline BTS7960_BLE() __attribute__((always_inline));
   inline void Stp() __attribute__((always_inline));
   inline void front() __attribute__((always_inline));
   inline void back() __attribute__((always_inline));
@@ -54,11 +53,11 @@ class BTS7960TH9x
 //  inline void rightShift() __attribute__((always_inline));
 };
 
-BTS7960TH9x::BTS7960TH9x()
+BTS7960_BLE::BTS7960_BLE()
 {
   // Led pins set as output
   pinMode(redLed, OUTPUT);
-  pinMode(blueLed,OUTPUT)
+  pinMode(blueLed,OUTPUT);
   
   //Motor driver enable pins set as output and high 
   pinMode(R_EN1, OUTPUT);
@@ -80,18 +79,7 @@ BTS7960TH9x::BTS7960TH9x()
   this->Speed=0;
 }
 
-/*
-void BTS7960TH9x:: readEncoder()
-{
-  int temp = digitalRead(ENCA);
-  if(temp>0)
-    pos++;
-   else
-    pos--;
-}
-*/
-
-void BTS7960TH9x::Stp()
+void BTS7960_BLE::Stp()
 {
   analogWrite(RPWM1,0);
   analogWrite(LPWM1,0);
@@ -103,7 +91,7 @@ void BTS7960TH9x::Stp()
 //  analogWrite(LPWM4,0);
 }
 
-void BTS7960TH9x::front()
+void BTS7960_BLE::front()
 {
   analogWrite(RPWM1,Speed);
   analogWrite(LPWM1,0);
@@ -115,7 +103,7 @@ void BTS7960TH9x::front()
 //  analogWrite(LPWM4,0);
 }
 
-void BTS7960TH9x::back()
+void BTS7960_BLE::back()
 {
   analogWrite(RPWM1,0);
   analogWrite(LPWM1,Speed);
@@ -127,7 +115,7 @@ void BTS7960TH9x::back()
 //  analogWrite(LPWM4,0);
 }
 
-void BTS7960TH9x::rightTurn()
+void BTS7960_BLE::rightTurn()
 {
   analogWrite(RPWM1,0);
   analogWrite(LPWM1,Speed);
@@ -139,7 +127,7 @@ void BTS7960TH9x::rightTurn()
 //  analogWrite(LPWM4,Speed);
 }
 
-void BTS7960TH9x::leftTurn()
+void BTS7960_BLE::leftTurn()
 {
   analogWrite(RPWM1,Speed);
   analogWrite(LPWM1,0);
@@ -152,7 +140,7 @@ void BTS7960TH9x::leftTurn()
 }
 
 /*
-void BTS7960TH9x::rightShift()
+void BTS7960_BLE::rightShift()
 {
   analogWrite(RPWM1,0);
   analogWrite(LPWM1,Speed);
@@ -164,7 +152,7 @@ void BTS7960TH9x::rightShift()
   analogWrite(LPWM4,Speed);
 }
 
-void BTS7960TH9x::leftShift()
+void BTS7960_BLE::leftShift()
 {
   analogWrite(RPWM1,Speed);
   analogWrite(LPWM1,0);
@@ -177,7 +165,7 @@ void BTS7960TH9x::leftShift()
 }
 
 /*
-void BTS7960TH9x::rightDiagonal()
+void BTS7960_BLE::rightDiagonal()
 {
   analogWrite(RPWM1,0);
   analogWrite(LPWM1,Speed);
@@ -189,7 +177,7 @@ void BTS7960TH9x::rightDiagonal()
   analogWrite(LPWM4,0);
 }
 
-void BTS7960TH9x::leftDiagonal()
+void BTS7960_BLE::leftDiagonal()
 {
   analogWrite(RPWM1,0);
   analogWrite(LPWM1,Speed);

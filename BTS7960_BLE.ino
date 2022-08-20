@@ -1,6 +1,6 @@
 #include "BTS7960_BLE.h"
-
-BTS7960TH9x car;                                   //Create an object of class car
+#include <IBusBM.h>
+BTS7960_BLE car;                                   //Create an object of class car
 uint8_t key;                                  //Key for the switch case
   
 void setup(){
