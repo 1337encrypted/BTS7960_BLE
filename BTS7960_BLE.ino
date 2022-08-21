@@ -1,10 +1,42 @@
-#include "BTS7960_BLE.h"
+#include "BTS7960.h"
+#include "BUZZER.h"
+#include "LIGHTS.h"
 #include <IBusBM.h>
-BTS7960_BLE car;                                   //Create an object of class car
-uint8_t key;                                  //Key for the switch case
+
+  //BTS7960 motor driver 2 pin definitions
+  #define R_EN1 2
+  #define L_EN1 4
+  #define RPWM1 3
+  #define LPWM1 5
+  //#define R_IS1   Alarm pin
+  //#define L_IS1   Alarm pin
   
+  //BTS7960 motor driver 2 pin definitions
+  #define R_EN2 7
+  #define L_EN2 8
+  #define RPWM2 6
+  #define LPWM2 9
+  //#define R_IS2   Alarm pin
+  //#define L_IS2   Alarm pin
+
+  //Led definition section
+  #define redLed 10
+  #define blueLed 11
+
+  //Buzzer definition section
+  #define buzzpin A5
+
+BTS7960 car(L_EN1, R_EN1, LPWM1, RPWM1, L_EN2, R_EN2, LPWM2, RPWM2);  //Create an object of class car
+lights light(redLed,blueLed);                                         //Create object for light
+buzzer buzz(buzzpin);                                                 //Create object for buzzer
+uint8_t key;                                                          //Key for the switch case
+
+
 void setup(){
-  Serial.begin(9600); 
+  Serial.begin(9600);
+  car.begin();
+  light.begin();
+  buzz.begin();
 }
 
 void loop()
