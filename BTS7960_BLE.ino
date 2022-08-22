@@ -43,7 +43,7 @@ void initSystem()
   light.lightsOn();                                                   //Turns all the lights on
   buzz.initBuzzer();                                                  //puts the buzzer on
   delay(2);
-  light.stopMotors(motor1.pwm);                                     //Keeprs red led on while making blue go off
+  light.stopMotors(motor1.pwm);                                       //Keeprs red led on while making blue go off
   buzz.buzzOff();                                                     //Shutsdown the buzzer
 }
 
