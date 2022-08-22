@@ -1,123 +1,196 @@
+#include <Arduino.h>
 #include "BTS7960.h"
 #include "BUZZER.h"
 #include "LIGHTS.h"
-#include <IBusBM.h>
 
-  //BTS7960 motor driver 2 pin definitions
-  #define R_EN1 2
-  #define L_EN1 4
-  #define RPWM1 3
-  #define LPWM1 5
-  //#define R_IS1   Alarm pin
-  //#define L_IS1   Alarm pin
-  
-  //BTS7960 motor driver 2 pin definitions
-  #define R_EN2 7
-  #define L_EN2 8
-  #define RPWM2 6
-  #define LPWM2 9
-  //#define R_IS2   Alarm pin
-  //#define L_IS2   Alarm pin
+//BTS7960 motor driver 2 pin definitions
+#define R_EN1 2
+#define L_EN1 4
+#define RPWM1 3   //PWM 490hz
+#define LPWM1 5   //PWM 980hz
+//#define R_IS1   //Alarm pin
+//#define L_IS1   //Alarm pin
 
-  //Led definition section
-  #define redLed 10
-  #define blueLed 11
+//BTS7960 motor driver 2 pin definitions
+#define R_EN2 7
+#define L_EN2 8
+#define RPWM2 6   //PWM 980hz
+#define LPWM2 9   //PWM 490hz
+//#define R_IS2   //Alarm pin
+//#define L_IS2   //Alarm pin
 
-  //Buzzer definition section
-  #define buzzpin A5
+//Led definition section
+#define redLed 10
+#define blueLed 11
 
-BTS7960 car(L_EN1, R_EN1, LPWM1, RPWM1, L_EN2, R_EN2, LPWM2, RPWM2);  //Create an object of class car
+//Buzzer definition section
+#define buzzpin A5
+
+BTS7960 motor1(L_EN1, R_EN1, LPWM1, RPWM1);                           //Create an object of class motor1
+BTS7960 motor2(L_EN2, R_EN2, LPWM2, RPWM2);                           //Create an object of class motor2
 lights light(redLed,blueLed);                                         //Create object for light
 buzzer buzz(buzzpin);                                                 //Create object for buzzer
 uint8_t key;                                                          //Key for the switch case
 
+/*================================================Functin prototyping section========================================================*/
+inline void initSystem();
+/*===================================================================================================================================*/
+
+
+void initSystem()
+{
+  motor1.enable_BTS7960();                                            //Makes all enable pins go high
+  motor2.enable_BTS7960();                                            //Makes all enable pins go high
+  light.lightsOn();                                                   //Turns all the lights on
+  buzz.initBuzzer();                                                  //puts the buzzer on
+  delay(2);
+  light.stopMotors(motor1.Speed);                                     //Keeprs red led on while making blue go off
+  buzz.buzzOff();                                                     //Shutsdown the buzzer
+}
 
 void setup(){
   Serial.begin(9600);
-  car.begin();
+  motor1.begin();
+  motor2.begin();
   light.begin();
   buzz.begin();
+
+  //initilize the system by turing on the lights and buzzer
+  initSystem();
 }
 
 void loop()
 {
-  if (Serial.available() > 0)
+  if (Serial.available())
   {  
     key=Serial.read();
-    car.Stp();
+    light.stopMotors(motor1.Speed);
+    motor1.Stp();
+    motor2.Stp();
     switch(key)
     {
       case 'F':
-        car.front();
-        Serial.println("Foreward");
-        break;
+      light.runMotors(motor1.Speed);
+      motor1.front();
+      motor2.front();
+      Serial.println("Foreward");
+      break;
+      
       case 'B':
-        car.back();
-        Serial.println("Backward");
-        break;
+      light.runMotors(motor1.Speed);
+      motor1.back();
+      motor2.back();
+      Serial.println("Backward");
+      break;
+      
       case 'L':
-        car.leftTurn();
-        Serial.println("Left");
-        break;
+      light.runMotors(motor1.Speed);
+      motor1.back();
+      motor2.front();
+      Serial.println("Left");
+      break;
+      
       case 'R':
-        car.rightTurn();
-        Serial.println("Right");
-        break;
+      light.runMotors(motor1.Speed);
+      motor1.front();
+      motor2.back();
+      Serial.println("Right");
+      break;
+      
       /*
       case 'I':
-        car.rightShift();
-        Serial.println("Right Shift");
-        break;
+      light.runMotors(Speed);
+      //motor1.
+      Serial.println("Right Shift");
+      break;
+      
       case 'G':
-        car.leftShift();
-        Serial.println("Left Shift");
-        break;
-        */
+      light.runMotors(Speed);
+      //motor1.
+      Serial.println("Left Shift");
+      break;
+      */
+      
       case '0':
-        car.Speed = 115;
-        Serial.println("car.Speed = 115");
-        break;
+      buzz.buzzOn();
+      motor1.Speed = 115;
+      motor2.Speed = 115;
+      Serial.println("motor1.Speed = 115");
+      break;
+      
       case '1':
-        car.Speed = 130;
-        Serial.println("car.Speed = 130");
-        break;
+      buzz.buzzOff();
+      motor1.Speed = 130;
+      motor2.Speed = 130;
+      Serial.println("motor1.Speed = 130");
+      break;
+      
       case '2':
-        car.Speed = 143;
-        Serial.println("car.Speed = 143");
-        break;
+      buzz.buzzOff();
+      motor1.Speed = 143;
+      motor2.Speed = 143;
+      Serial.println("motor1.Speed = 143");
+      break;
+      
       case '3':
-        car.Speed = 157;
-        Serial.println("car.Speed = 157");
-        break;
+      buzz.buzzOff();
+      motor1.Speed = 157;
+      motor2.Speed = 157;
+      Serial.println("motor1.Speed = 157");
+      break;
+      
       case '4':
-        car.Speed = 170;
-        Serial.println("car.Speed = 170");
-        break;
+      buzz.buzzOff();
+      motor1.Speed = 170;
+      motor2.Speed = 170;
+      Serial.println("motor1.Speed = 170");
+      break;
+      
       case '5':
-        car.Speed = 185;
-        Serial.println("car.Speed = 185");
-        break;
+      buzz.buzzOff();
+      motor1.Speed = 185;
+      motor2.Speed = 185;
+      Serial.println("motor1.Speed = 185");
+      break;
+      
       case '6':
-        car.Speed = 200;
-        Serial.println("car.Speed = 200");
-        break;
+      buzz.buzzOff();
+      motor1.Speed = 200;
+      motor2.Speed = 200;
+      Serial.println("motor1.Speed = 200");
+      break;
+      
       case '7':
-        car.Speed = 213;
-        Serial.println("car.Speed = 213");
-        break;
+      buzz.buzzOff();
+      motor1.Speed = 213;
+      motor2.Speed = 213;
+      Serial.println("motor1.Speed = 213");
+      break;
+      
       case '8':
-        car.Speed = 227;
-        Serial.println("car.Speed = 227");
-        break;
+      buzz.buzzOff();
+      motor1.Speed = 227;
+      motor2.Speed = 227;
+      Serial.println("motor1.Speed = 227");
+      break;
+      
       case '9':
-        car.Speed = 240;
-        Serial.println("car.Speed = 240");
-        break;
+      buzz.buzzOff();
+      motor1.Speed = 240;
+      motor2.Speed = 240;
+      Serial.println("motor1.Speed = 240");
+      break;
+      
       case 'q':
-        car.Speed = 255;
-        Serial.println("car.Speed = 255");
-        break;
-      default: Serial.println("Invalid input, please choose 1 - 9,q");
+      buzz.buzzOff();
+      motor1.Speed = 255;
+      motor2.Speed = 255;
+      Serial.println("motor1.Speed = 255");
+      break;
+      
+      default: 
+      Serial.println("Invalid input, please choose 1 - 9,q");
+      break;
     }
   }
 }

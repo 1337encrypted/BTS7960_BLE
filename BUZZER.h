@@ -1,6 +1,8 @@
 #ifndef BUZZER_H
 #define BUZZER_H
 
+#include <Arduino.h>
+
 class buzzer
 {
   private:
@@ -12,7 +14,7 @@ class buzzer
   inline buzzer() __attribute__((always_inline));
   inline buzzer(byte) __attribute__((always_inline));
   inline void begin() __attribute__((always_inline));
-  inline void __initBuzzer() __attribute__((always_inline));
+  inline void initBuzzer() __attribute__((always_inline));
   inline void buzzOn() __attribute__((always_inline));
   inline void buzzOff() __attribute__((always_inline));
 };
@@ -39,7 +41,7 @@ void buzzer::begin()
   pinMode(buzzpin, OUTPUT);
 }
 
-void buzzer::__initBuzzer()
+void buzzer::initBuzzer()
 {
   //InitBuzzer is for active buzzer
   digitalWrite(buzzpin, HIGH); 

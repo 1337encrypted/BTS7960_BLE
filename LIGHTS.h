@@ -1,6 +1,8 @@
 #ifndef LIGHTS_H
 #define LIGHTS_H
 
+#include <Arduino.h>
+
 class lights
 {
   private:
@@ -13,7 +15,8 @@ class lights
   inline lights() __attribute__((always_inline));
   inline lights(byte, byte) __attribute__((always_inline));
   inline void begin() __attribute__((always_inline));
-  inline void __initLights() __attribute__((always_inline));
+  inline void lightsOn() __attribute__((always_inline));
+  inline void lightsOff() __attribute__((always_inline));
   inline void runMotors(uint8_t) __attribute__((always_inline));
   inline void stopMotors(uint8_t) __attribute__((always_inline));
 };
@@ -44,10 +47,16 @@ void lights::begin()
   //__initLights();
 }
 
-void lights::__initLights()
+void lights::lightsOn()
 {
   digitalWrite(redLed, HIGH);
   digitalWrite(blueLed, HIGH);  
+}
+
+void lights::lightsOff()
+{
+  digitalWrite(redLed, LOW);
+  digitalWrite(blueLed, LOW);
 }
 
 void lights::runMotors(uint8_t Speed)
