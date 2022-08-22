@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "BTS7960.h"
 #include "BUZZER.h"
 #include "LIGHTS.h"
@@ -44,7 +43,7 @@ void initSystem()
   light.lightsOn();                                                   //Turns all the lights on
   buzz.initBuzzer();                                                  //puts the buzzer on
   delay(2);
-  light.stopMotors(motor1.Speed);                                     //Keeprs red led on while making blue go off
+  light.stopMotors(motor1.pwm);                                     //Keeprs red led on while making blue go off
   buzz.buzzOff();                                                     //Shutsdown the buzzer
 }
 
@@ -64,34 +63,34 @@ void loop()
   if (Serial.available())
   {  
     key=Serial.read();
-    light.stopMotors(motor1.Speed);
+    light.stopMotors(motor1.pwm);
     motor1.Stp();
     motor2.Stp();
     switch(key)
     {
       case 'F':
-      light.runMotors(motor1.Speed);
+      light.runMotors(motor1.pwm);
       motor1.front();
       motor2.front();
       Serial.println("Foreward");
       break;
       
       case 'B':
-      light.runMotors(motor1.Speed);
+      light.runMotors(motor1.pwm);
       motor1.back();
       motor2.back();
       Serial.println("Backward");
       break;
       
       case 'L':
-      light.runMotors(motor1.Speed);
+      light.runMotors(motor1.pwm);
       motor1.back();
       motor2.front();
       Serial.println("Left");
       break;
       
       case 'R':
-      light.runMotors(motor1.Speed);
+      light.runMotors(motor1.pwm);
       motor1.front();
       motor2.back();
       Serial.println("Right");
@@ -113,79 +112,79 @@ void loop()
       
       case '0':
       buzz.buzzOn();
-      motor1.Speed = 115;
-      motor2.Speed = 115;
-      Serial.println("motor1.Speed = 115");
+      motor1.pwm = 115;
+      motor2.pwm = 115;
+      Serial.println("motor1.pwm = 115");
       break;
       
       case '1':
       buzz.buzzOff();
-      motor1.Speed = 130;
-      motor2.Speed = 130;
-      Serial.println("motor1.Speed = 130");
+      motor1.pwm = 130;
+      motor2.pwm = 130;
+      Serial.println("motor1.pwm = 130");
       break;
       
       case '2':
       buzz.buzzOff();
-      motor1.Speed = 143;
-      motor2.Speed = 143;
-      Serial.println("motor1.Speed = 143");
+      motor1.pwm = 143;
+      motor2.pwm = 143;
+      Serial.println("motor1.pwm = 143");
       break;
       
       case '3':
       buzz.buzzOff();
-      motor1.Speed = 157;
-      motor2.Speed = 157;
-      Serial.println("motor1.Speed = 157");
+      motor1.pwm = 157;
+      motor2.pwm = 157;
+      Serial.println("motor1.pwm = 157");
       break;
       
       case '4':
       buzz.buzzOff();
-      motor1.Speed = 170;
-      motor2.Speed = 170;
-      Serial.println("motor1.Speed = 170");
+      motor1.pwm = 170;
+      motor2.pwm = 170;
+      Serial.println("motor1.pwm = 170");
       break;
       
       case '5':
       buzz.buzzOff();
-      motor1.Speed = 185;
-      motor2.Speed = 185;
-      Serial.println("motor1.Speed = 185");
+      motor1.pwm = 185;
+      motor2.pwm = 185;
+      Serial.println("motor1.pwm = 185");
       break;
       
       case '6':
       buzz.buzzOff();
-      motor1.Speed = 200;
-      motor2.Speed = 200;
-      Serial.println("motor1.Speed = 200");
+      motor1.pwm = 200;
+      motor2.pwm = 200;
+      Serial.println("motor1.pwm = 200");
       break;
       
       case '7':
       buzz.buzzOff();
-      motor1.Speed = 213;
-      motor2.Speed = 213;
-      Serial.println("motor1.Speed = 213");
+      motor1.pwm = 213;
+      motor2.pwm = 213;
+      Serial.println("motor1.pwm = 213");
       break;
       
       case '8':
       buzz.buzzOff();
-      motor1.Speed = 227;
-      motor2.Speed = 227;
-      Serial.println("motor1.Speed = 227");
+      motor1.pwm = 227;
+      motor2.pwm = 227;
+      Serial.println("motor1.pwm = 227");
       break;
       
       case '9':
       buzz.buzzOff();
-      motor1.Speed = 240;
-      motor2.Speed = 240;
-      Serial.println("motor1.Speed = 240");
+      motor1.pwm = 240;
+      motor2.pwm = 240;
+      Serial.println("motor1.pwm = 240");
       break;
       
       case 'q':
       buzz.buzzOff();
-      motor1.Speed = 255;
-      motor2.Speed = 255;
-      Serial.println("motor1.Speed = 255");
+      motor1.pwm = 255;
+      motor2.pwm = 255;
+      Serial.println("motor1.pwm = 255");
       break;
       
       default: 

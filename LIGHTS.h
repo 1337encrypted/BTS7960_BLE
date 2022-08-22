@@ -1,3 +1,4 @@
+/*Cannot create a .cpp file as inline prototypes need the function to be present in the same file as they are defined*/
 #ifndef LIGHTS_H
 #define LIGHTS_H
 
@@ -20,6 +21,7 @@ class lights
   inline void runMotors(uint8_t) __attribute__((always_inline));
   inline void stopMotors(uint8_t) __attribute__((always_inline));
 };
+
 //Default constructor
 lights::lights()
 {
@@ -72,5 +74,4 @@ void lights::stopMotors(uint8_t Speed)
   analogWrite(redLed, Speed);
   digitalWrite(blueLed, LOW);
 }
-  
 #endif  //END LIGHTS_h

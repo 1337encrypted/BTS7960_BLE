@@ -1,3 +1,4 @@
+/*Cannot create a .cpp file as inline prototypes need the function to be present in the same file as they are defined*/
 #ifndef BTS7960_H
 #define BTS7960_H
 
@@ -6,11 +7,15 @@
 class BTS7960
 {
   private:
-  //BTS7960 1 module
-  byte L_EN,R_EN,L_PWM,R_PWM;                                 //L_IS1,R_IS1 are not included
+
+  //L_IS1,R_IS1 are not included
+  byte L_EN;
+  byte R_EN;
+  byte L_PWM;
+  byte R_PWM;
   
   public:
-  volatile uint8_t Speed;                                       //volatile as it shouldn't be ignored by the compiler, speed variable to control the speed
+  volatile uint8_t pwm;                                       //pwm variable to control the speed of motor
 /*================================================Functin prototyping section========================================================*/
   inline BTS7960() __attribute__((always_inline));
   inline BTS7960(byte, byte, byte, byte) __attribute__((always_inline));
@@ -26,7 +31,6 @@ class BTS7960
 //Default constructor
 BTS7960::BTS7960()
 {
-
   //Motor driver 1 pin definitions
   this->L_EN = 2;
   this->L_EN = 4;
@@ -35,8 +39,8 @@ BTS7960::BTS7960()
   //this->L_IS1 = L_IS1   //Alarm pin
   //this->R_IS1 = R_IS1   //Alarm pin
 
-  //Set the global speed variable to 255 
-  this->Speed = 255;
+  //Set the global pwm variable to 255 
+  this->pwm = 255;
 }
 
 //Parametrised constructor
@@ -50,8 +54,8 @@ BTS7960::BTS7960(byte L_EN, byte R_EN, byte L_PWM, byte R_PWM)
   //this->L_IS1 = L_IS1   //Alarm pin
   //this->R_IS1 = R_IS1   //Alarm pin
 
-  //Set the global speed variable to 255 
-  this->Speed = 255;
+  //Set the global pwm variable to 255 
+  this->pwm = 255;
 }
 
 void BTS7960::enable_BTS7960()
@@ -74,7 +78,7 @@ void BTS7960::begin()
   pinMode(R_EN, OUTPUT);
   pinMode(L_EN, OUTPUT);
   
-  //PWM is for direction and speed
+  //PWM is for direction and pwm
   pinMode(R_PWM, OUTPUT);
   pinMode(L_PWM, OUTPUT);
 }
@@ -87,15 +91,17 @@ void BTS7960::Stp()
 
 void BTS7960::front()
 {
-  analogWrite(R_PWM,Speed);
+  analogWrite(R_PWM,pwm);
   delayMicroseconds(100);
   analogWrite(L_PWM,0);
+  delayMicroseconds(100);
 }
 
 void BTS7960::back()
 {
   analogWrite(R_PWM,0);
   delayMicroseconds(100);
-  analogWrite(L_PWM,Speed);
+  analogWrite(L_PWM,pwm);
+  delayMicroseconds(100);
 }
-#endif
+#endif  //END BTS7960_H

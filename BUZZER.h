@@ -1,3 +1,4 @@
+/*Cannot create a .cpp file as inline prototypes need the function to be present in the same file as they are defined*/
 #ifndef BUZZER_H
 #define BUZZER_H
 
@@ -18,6 +19,7 @@ class buzzer
   inline void buzzOn() __attribute__((always_inline));
   inline void buzzOff() __attribute__((always_inline));
 };
+
 
 //Default constructor
 buzzer::buzzer()
