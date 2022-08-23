@@ -25,6 +25,7 @@ class BTS7960
   inline void Stp() __attribute__((always_inline));
   inline void front() __attribute__((always_inline));
   inline void back() __attribute__((always_inline));
+  //inline void print() __attribute__((always_inline));
 /*===================================================================================================================================*/
 };
 
