@@ -2,8 +2,6 @@
 #ifndef BTS7960_H
 #define BTS7960_H
 
-#include <Arduino.h>
-
 class BTS7960
 {
   private:
@@ -20,8 +18,8 @@ class BTS7960
   inline BTS7960() __attribute__((always_inline));
   inline BTS7960(byte, byte, byte, byte) __attribute__((always_inline));
   inline void begin() __attribute__((always_inline));
-  inline void enable_BTS7960() __attribute__((always_inline));
-  inline void disable_BTS7960() __attribute__((always_inline));
+  inline void enable() __attribute__((always_inline));
+  inline void disable() __attribute__((always_inline));
   inline void Stp() __attribute__((always_inline));
   inline void front() __attribute__((always_inline));
   inline void back() __attribute__((always_inline));
@@ -59,14 +57,14 @@ BTS7960::BTS7960(byte L_EN, byte R_EN, byte L_PWM, byte R_PWM)
   this->pwm = 255;
 }
 
-void BTS7960::enable_BTS7960()
+void BTS7960::enable()
 {
   //Setting the BTS7960 enable pins high
   digitalWrite(R_EN, HIGH);
   digitalWrite(L_EN, HIGH);
 }
 
-void BTS7960::disable_BTS7960()
+void BTS7960::disable()
 {
   //Setting the BTS7960 enable pins high
   digitalWrite(R_EN, LOW);

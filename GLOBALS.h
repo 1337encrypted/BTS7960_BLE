@@ -1,7 +1,13 @@
 #include "BTS7960.h"
 #include "BUZZER.h"
-#include "LIGHTS.h"
-
+#include "LED.h"
+#include <Arduino.h>
+/* 
+ * Debug on and off enables code optimization
+ * DEBUG 0 will ignore all Serial.print functions
+ * DEBUG 1 will will add back Serial.print functions back to the code
+ */
+ 
 #define DEBUG 0
 
 #if DEBUG == 1
@@ -29,8 +35,23 @@
 //#define L_IS2   //Alarm pin
 
 //Led definition section
-#define redLed 10
-#define blueLed 11
+#define redLedPin 10
+#define blueLedPin 11
 
 //Buzzer definition section
 #define buzzpin A5
+
+//namespace light
+//{
+//  void stopMotors()
+//  {
+//    redLed.ledOff();
+//    blueLed.ledOff();  
+//  }
+//  
+//  void runMotors()
+//  {
+//    redLed.ledOn();
+//    blueLed.ledOn();
+//  }
+//}

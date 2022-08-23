@@ -1,8 +1,9 @@
-#include "PREPROCESSOR.h"
+#include "GLOBALS.h"
 
 BTS7960 motor1(L_EN1, R_EN1, LPWM1, RPWM1);                           //Create an object of class motor1
 BTS7960 motor2(L_EN2, R_EN2, LPWM2, RPWM2);                           //Create an object of class motor2
-lights light(redLed,blueLed);                                         //Create object for light
+led redLed(redLedPin, motor1.pwm);                                    //Create object for red led
+led blueLed(blueLedPin, motor1.pwm);                                  //Create object for blue led
 buzzer buzz(buzzpin);                                                 //Create object for buzzer
 uint8_t key;                                                          //Key for the switch case
 
@@ -13,12 +14,14 @@ inline void initSystem();
 
 void initSystem()
 {
-  motor1.enable_BTS7960();                                            //Makes all enable pins go high
-  motor2.enable_BTS7960();                                            //Makes all enable pins go high
-  light.lightsOn();                                                   //Turns all the lights on
+  motor1.enable();                                                    //Makes all enable pins go high
+  motor2.enable();                                                    //Makes all enable pins go high
+  blueLed.ledOn();                                                    //Turns the blue led on
+  redLed.ledOn();                                                     //Turns the red led on
   buzz.initBuzzer();                                                  //puts the buzzer on
   delay(2);
-  light.stopMotors(motor1.pwm);                                       //Keeprs red led on while making blue go off
+  blueLed.ledOff();                                                   //Turns the blue led on
+  redLed.ledOff();                                                    //Turns the red led on
   buzz.buzzOff();                                                     //Shutsdown the buzzer
 }
 
@@ -26,25 +29,28 @@ void setup(){
   Serial.begin(9600);
   motor1.begin();
   motor2.begin();
-  light.begin();
+  redLed.begin();
+  blueLed.begin();
   buzz.begin();
 
-  //initilize the system by turing on the lights and buzzer
+  //initilize the system by turing on the leds and buzzer
   initSystem();
 }
 
 void loop()
 {
+  blueLed.ledOn();
+  redLed.ledOff();
+  motor1.Stp();
+  motor2.Stp();
   if (Serial.available())
   {  
     key=Serial.read();
-    light.stopMotors(motor1.pwm);
-    motor1.Stp();
-    motor2.Stp();
     switch(key)
     {
       case 'F':
-      light.runMotors(motor1.pwm);
+      blueLed.ledOn();
+      redLed.ledOff();
       motor1.front();
       motor2.front();
       debug("Foreward: ");
@@ -54,7 +60,8 @@ void loop()
       break;
       
       case 'B':
-      light.runMotors(motor1.pwm);
+      blueLed.ledOn();
+      redLed.ledOff();
       motor1.back();
       motor2.back();
       debugln("Backward");
@@ -64,7 +71,8 @@ void loop()
       break;
       
       case 'L':
-      light.runMotors(motor1.pwm);
+      blueLed.ledOn();
+      redLed.ledOff();
       motor1.back();
       motor2.front();
       debugln("Left");
@@ -74,7 +82,8 @@ void loop()
       break;
       
       case 'R':
-      light.runMotors(motor1.pwm);
+      blueLed.ledOn();
+      redLed.ledOff();
       motor1.front();
       motor2.back();
       debugln("Right");
@@ -85,7 +94,8 @@ void loop()
       
       /*
       case 'I':
-      light.runMotors(Speed);
+      blueLed.ledOn();
+      redLed.ledOff();
       //motor1.
       debugln("Right Shift");
       debug(motor1.pwm);
@@ -94,7 +104,8 @@ void loop()
       break;
       
       case 'G':
-      light.runMotors(Speed);
+      blueLed.ledOn();
+      redLed.ledOff();
       //motor1.
       debugln("Left Shift");
       debug(motor1.pwm);
