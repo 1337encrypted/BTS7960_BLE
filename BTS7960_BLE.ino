@@ -4,12 +4,12 @@ BTS7960 motor1(L_EN1, R_EN1, LPWM1, RPWM1);                           //Create a
 BTS7960 motor2(L_EN2, R_EN2, LPWM2, RPWM2);                           //Create an object of class motor2
 led redLed(redLedPin, motor1.pwm);                                    //Create object for red led
 led blueLed(blueLedPin, motor1.pwm);                                  //Create object for blue led
-buzzer buzz(buzzpin);                                                 //Create object for buzzer
+//buzzer buzz(buzzpin);                                                 //Create object for buzzer
 uint8_t key;                                                          //Key for the switch case
 
-/*================================================Function prototyping section=======================================================*/
+/*==================================================Function prototyping section=========================================================*/
 inline void initSystem();
-/*===================================================================================================================================*/
+/*=======================================================================================================================================*/
 
 
 void initSystem()
@@ -18,11 +18,11 @@ void initSystem()
   motor2.enable();                                                    //Makes all enable pins go high
   blueLed.ledOn();                                                    //Turns the blue led on
   redLed.ledOn();                                                     //Turns the red led on
-  buzz.initBuzzer();                                                  //puts the buzzer on
-  delay(2);
+  //buzz.initBuzzer();                                                  //puts the buzzer on
+  delay(1);
   blueLed.ledOff();                                                   //Turns the blue led on
   redLed.ledOff();                                                    //Turns the red led on
-  buzz.buzzOff();                                                     //Shutsdown the buzzer
+  //buzz.buzzOff();                                                     //Shutsdown the buzzer
 }
 
 void setup(){
@@ -31,7 +31,7 @@ void setup(){
   motor2.begin();
   redLed.begin();
   blueLed.begin();
-  buzz.begin();
+  //buzz.begin();
 
   //initilize the system by turing on the leds and buzzer
   initSystem();
@@ -39,10 +39,10 @@ void setup(){
 
 void loop()
 {
-  blueLed.ledOn();
-  redLed.ledOff();
-  motor1.Stp();
-  motor2.Stp();
+//  blueLed.ledOn();
+//  redLed.ledOff();
+//  motor1.stop();
+//  motor2.stop();
   if (Serial.available())
   {  
     key=Serial.read();
@@ -115,7 +115,7 @@ void loop()
       */
       
       case '0':
-      buzz.buzzOn();
+      //buzz.buzzOff();
       motor1.pwm = 115;
       motor2.pwm = 115;
       debugln("Speed: ");
@@ -125,7 +125,7 @@ void loop()
       break;
       
       case '1':
-      buzz.buzzOff();
+      //buzz.buzzOff();
       motor1.pwm = 130;
       motor2.pwm = 130;
       debugln("Speed: ");
@@ -135,7 +135,7 @@ void loop()
       break;
       
       case '2':
-      buzz.buzzOff();
+      //buzz.buzzOff();
       motor1.pwm = 143;
       motor2.pwm = 143;
       debugln("Speed: ");
@@ -145,7 +145,7 @@ void loop()
       break;
       
       case '3':
-      buzz.buzzOff();
+      //buzz.buzzOff();
       motor1.pwm = 157;
       motor2.pwm = 157;
       debugln("Speed: ");
@@ -155,7 +155,7 @@ void loop()
       break;
       
       case '4':
-      buzz.buzzOff();
+      //buzz.buzzOff();
       motor1.pwm = 170;
       motor2.pwm = 170;
       debugln("Speed: ");
@@ -165,7 +165,7 @@ void loop()
       break;
       
       case '5':
-      buzz.buzzOff();
+      //buzz.buzzOff();
       motor1.pwm = 185;
       motor2.pwm = 185;
       debugln("Speed: ");
@@ -175,7 +175,7 @@ void loop()
       break;
       
       case '6':
-      buzz.buzzOff();
+      //buzz.buzzOff();
       motor1.pwm = 200;
       motor2.pwm = 200;
       debugln("Speed: ");
@@ -185,7 +185,7 @@ void loop()
       break;
       
       case '7':
-      buzz.buzzOff();
+      //buzz.buzzOff();
       motor1.pwm = 213;
       motor2.pwm = 213;
       debugln("Speed: ");
@@ -195,7 +195,7 @@ void loop()
       break;
       
       case '8':
-      buzz.buzzOff();
+      //buzz.buzzOff();
       motor1.pwm = 227;
       motor2.pwm = 227;
       debugln("Speed: ");
@@ -205,7 +205,7 @@ void loop()
       break;
       
       case '9':
-      buzz.buzzOff();
+      //buzz.buzzOff();
       motor1.pwm = 240;
       motor2.pwm = 240;
       debugln("Speed: ");
@@ -215,7 +215,7 @@ void loop()
       break;
       
       case 'q':
-      buzz.buzzOff();
+     //buzz.buzzOff();
       motor1.pwm = 255;
       motor2.pwm = 255;
       debugln("Speed: ");
@@ -224,9 +224,9 @@ void loop()
       debugln(motor2.pwm);
       break;
       
-      default: 
-      debugln("Invalid input, please choose 1 - 9,q");
-      break;
+//      default: 
+//      debugln("Invalid input, please choose 1 - 9,q");
+//      break;
     }
   }
 }

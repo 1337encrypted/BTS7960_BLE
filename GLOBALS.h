@@ -1,14 +1,14 @@
-#include "BTS7960.h"
-#include "BUZZER.h"
+#include <BTS7960.h>
+//#include "BUZZER.h"
 #include "LED.h"
-#include <Arduino.h>
+
 /* 
  * Debug on and off enables code optimization
  * DEBUG 0 will ignore all Serial.print functions
  * DEBUG 1 will will add back Serial.print functions back to the code
  */
  
-#define DEBUG 0
+#define DEBUG 1
 
 #if DEBUG == 1
 #define debug(x) Serial.print(x)
@@ -39,7 +39,7 @@
 #define blueLedPin 11
 
 //Buzzer definition section
-#define buzzpin A5
+//#define buzzpin A5          //temp var
 
 //namespace light
 //{
