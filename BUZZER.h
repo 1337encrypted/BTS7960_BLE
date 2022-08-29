@@ -12,16 +12,16 @@ class buzzer
 {
   private:
   //buzzer for low speed feedback
-  byte buzzpin;
+  uint8_t buzzpin;
 
   public:
   //Function prototype
   inline buzzer() __attribute__((always_inline));
-  inline buzzer(byte) __attribute__((always_inline));
+  inline buzzer(uint8_t) __attribute__((always_inline));
   inline void begin() __attribute__((always_inline));
   inline void initBuzzer() __attribute__((always_inline));
-  inline void buzzOn() __attribute__((always_inline));
-  inline void buzzOff() __attribute__((always_inline));
+  inline void on() __attribute__((always_inline));
+  inline void off() __attribute__((always_inline));
 };
 
 
@@ -34,7 +34,7 @@ buzzer::buzzer()
 }
 
 //Parametrized constructor
-buzzer::buzzer(byte buzzpin)
+buzzer::buzzer(uint8_t buzzpin)
 {
   //Initilize the buzzer
   this->buzzpin = buzzpin;
@@ -50,16 +50,20 @@ void buzzer::begin()
 void buzzer::initBuzzer()
 {
   //InitBuzzer is for active buzzer
-  digitalWrite(buzzpin, HIGH); 
+  tone(buzzpin, 3000, 500);
+  delay(800);
+  tone(buzzpin, 3000, 500);
+  delay(800);
+  noTone(buzzpin);
 }
 
-void buzzer::buzzOn()
+void buzzer::on()
 {
   digitalWrite(buzzpin, HIGH);  
 }
 
 
-void buzzer::buzzOff()
+void buzzer::off()
 {
   digitalWrite(buzzpin, LOW);  
 }

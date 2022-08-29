@@ -12,17 +12,18 @@ class led
 {
   private:
   //ledPin pins for function feedback
-  byte ledPin;
+  uint8_t ledPin;
 
   public:
   uint8_t pwm;
   
   //Function prototypes
   inline led() __attribute__((always_inline));
-  inline led(byte, uint8_t) __attribute__((always_inline));
+  inline led(uint8_t, uint8_t) __attribute__((always_inline));
   inline void begin() __attribute__((always_inline));
-  inline void ledOn() __attribute__((always_inline));
-  inline void ledOff() __attribute__((always_inline));
+  inline void on() __attribute__((always_inline));
+  inline void off() __attribute__((always_inline));
+  inline void toggle() __attribute__((always_inline));
 };
 
 //Default constructor
@@ -34,7 +35,7 @@ led::led()
 }
 
 //parametrized constructor
-led::led(byte ledPin, uint8_t pwm)
+led::led(uint8_t ledPin, uint8_t pwm)
 {
   //Initilize the ledPin pins
   this->ledPin = ledPin;
@@ -47,13 +48,24 @@ void led::begin()
   pinMode(ledPin, OUTPUT);
 }
 
-void led::ledOn()
+void led::on()
 {
   analogWrite(ledPin, pwm); 
 }
 
-void led::ledOff()
+void led::off()
 {
   digitalWrite(ledPin, LOW);
+}
+
+void led::toggle()
+{
+  static unsigned long ledMillis = millis();                    //Assigns the current snapshot of time only the first
+                                                                //time this code executes
+  if(millis() - ledMillis > 1000)
+  {
+    digitalWrite(ledPin, !digitalRead(ledPin));
+    ledMillis = millis();  
+  }
 }
 #endif  //END led_h
