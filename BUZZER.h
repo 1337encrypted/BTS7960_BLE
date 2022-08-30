@@ -59,7 +59,8 @@ void buzzer::initBuzzer()
 
 void buzzer::on()
 {
-  digitalWrite(buzzpin, HIGH);  
+  digitalWrite(buzzpin, HIGH);
+  //delay(1000);
 }
 
 

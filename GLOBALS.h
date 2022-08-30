@@ -1,3 +1,4 @@
+//#include <LibPrintf.h> 
 #include "BTS7960.h"
 #include "BUZZER.h"
 #include "LED.h"
@@ -11,11 +12,13 @@
 #define DEBUG 1
 
 #if DEBUG == 1
+//#define debug(x,y,z) printf(x,y,z)
 #define debug(x) Serial.print(x)
 #define debugln(x) Serial.println(x)
 #else
+//#define debug(x,y,z)
 #define debug(x)
-#define debugln(x)
+#define debugln(x) 
 #endif
 
 
@@ -77,8 +80,8 @@ uint8_t state = STOPALL;                                                //state 
 /*=====================================================  Object declaration=============================================================*/
 BTS7960 motor1(L_EN1, R_EN1, LPWM1, RPWM1);                           //Create an object of class motor1
 BTS7960 motor2(L_EN2, R_EN2, RPWM2, LPWM2);                           //Create an object of class motor2 should have been LPWM2, RPWM2
-led redLed(redLedPin, motor1.pwm);                                    //Create object for red led
-led blueLed(blueLedPin, motor1.pwm);                                  //Create object for blue led
+led redLed(redLedPin);                                    //Create object for red led
+led blueLed(blueLedPin);                                  //Create object for blue led
 buzzer buzz(buzzpin);                                                 //Create object for buzzer
 /*======================================================================================================================================*/
 

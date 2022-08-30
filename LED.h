@@ -15,11 +15,11 @@ class led
   uint8_t ledPin;
 
   public:
-  uint8_t pwm;
+  //uint8_t pwm;
   
   //Function prototypes
   inline led() __attribute__((always_inline));
-  inline led(uint8_t, uint8_t) __attribute__((always_inline));
+  inline led(uint8_t) __attribute__((always_inline));
   inline void begin() __attribute__((always_inline));
   inline void on() __attribute__((always_inline));
   inline void off() __attribute__((always_inline));
@@ -31,15 +31,15 @@ led::led()
 {
   //Initilize the ledPin pins
   this->ledPin = 13;
-  this->pwm = 255;
+  //this->pwm = 255;
 }
 
 //parametrized constructor
-led::led(uint8_t ledPin, uint8_t pwm)
+led::led(uint8_t ledPin)
 {
   //Initilize the ledPin pins
   this->ledPin = ledPin;
-  this->pwm = pwm;
+  //this->pwm = pwm;
 }
 
 void led::begin()
@@ -50,7 +50,7 @@ void led::begin()
 
 void led::on()
 {
-  analogWrite(ledPin, pwm); 
+  digitalWrite(ledPin, HIGH); 
 }
 
 void led::off()
@@ -62,7 +62,7 @@ void led::toggle()
 {
   static unsigned long ledMillis = millis();                    //Assigns the current snapshot of time only the first
                                                                 //time this code executes
-  if(millis() - ledMillis > 1000)
+  if(millis() - ledMillis > 700)
   {
     digitalWrite(ledPin, !digitalRead(ledPin));
     ledMillis = millis();  

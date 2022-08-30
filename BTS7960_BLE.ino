@@ -30,9 +30,6 @@ void loop()
 {
   if (Serial.available())
   { 
-    redLed.pwm = blueLed.pwm = motor1.pwm;
-//    blueLed.on();
-//    redLed.off(); 
     motor1.stop();
     motor2.stop();
     state = Serial.read();
@@ -43,10 +40,11 @@ void loop()
       redLed.off();
       motor1.front();
       motor2.front();
-      debug("Foreward: ");
+      debug("Front: ");
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nFront: %d : %d", motor1.pwm, motor2.pwm);
       break;
       
       case BACK:
@@ -54,10 +52,11 @@ void loop()
       redLed.off();
       motor1.back();
       motor2.back();
-      debug("Backward: ");
+      debug("Back: ");
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nBack: %d : %d", motor1.pwm, motor2.pwm);
       break;
       
       case LEFT:
@@ -69,6 +68,7 @@ void loop()
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nLeft: %d : %d", &motor1.pwm, &motor2.pwm);
       break;
       
       case RIGHT:
@@ -80,6 +80,7 @@ void loop()
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nRight: %d : %d", motor1.pwm, motor2.pwm);
       break;
       
       /*
@@ -87,20 +88,22 @@ void loop()
       blueLed.on();
       redLed.off();
       //motor1.
-      debug("Right Shift: ");
+      debug("Right shift: ");
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nRight shift: %d : %d", motor1.pwm, motor2.pwm);
       break;
       
       case LEFTSHIFT:
       blueLed.on();
       redLed.off();
       //motor1.
-      debug("Left Shift: ");
+      debug("Left shift: ");
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nLeft shift: %d : %d", motor1.pwm, motor2.pwm);
       break;
       */
       
@@ -114,6 +117,7 @@ void loop()
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nSpeed: %d : %d", motor1.pwm, motor2.pwm);
       break;
       
       case SPEED1:
@@ -126,6 +130,7 @@ void loop()
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nSpeed: %d : %d", motor1.pwm, motor2.pwm);
       break;
       
       case SPEED2:
@@ -138,6 +143,7 @@ void loop()
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nSpeed: %d : %d", motor1.pwm, motor2.pwm);
       break;
       
       case SPEED3:
@@ -150,6 +156,7 @@ void loop()
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nSpeed: %d : %d", motor1.pwm, motor2.pwm);
       break;
       
       case SPEED4:
@@ -162,6 +169,7 @@ void loop()
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nSpeed: %d : %d", motor1.pwm, motor2.pwm);
       break;
       
       case SPEED5:
@@ -174,6 +182,7 @@ void loop()
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nSpeed: %d : %d", motor1.pwm, motor2.pwm);
       break;
       
       case SPEED6:
@@ -186,6 +195,7 @@ void loop()
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nSpeed: %d : %d", motor1.pwm, motor2.pwm);
       break;
       
       case SPEED7:
@@ -198,18 +208,20 @@ void loop()
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nSpeed: %d : %d", motor1.pwm, motor2.pwm);
       break;
       
       case SPEED8:
       buzz.off();
 //      motor1.pwm = 227;
 //      motor2.pwm = 227;
-        motor1.pwm = 204;
-        motor2.pwm = 204;
+      motor1.pwm = 204;
+      motor2.pwm = 204;
       debug("Speed: ");
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nSpeed: %d : %d", motor1.pwm, motor2.pwm);
       break;
       
       case SPEED9:
@@ -222,6 +234,7 @@ void loop()
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nSpeed: %d : %d", motor1.pwm, motor2.pwm);
       break;
       
       case MAXSPEED:
@@ -232,13 +245,18 @@ void loop()
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
+      //debug("\nSpeed: %d : %d", motor1.pwm, motor2.pwm);
       break;
 
       case STOP:
       buzz.off();
       blueLed.off();
       redLed.on();
-      debugln("Stop");
+      debug("Stop: ");
+      debug(motor1.pwm);
+      debug(" : ");
+      debugln(motor2.pwm);
+      //debug("\nStop: %d : %d", motor1.pwm, motor2.pwm);
       break;
 
       case STOPALL:
@@ -248,20 +266,20 @@ void loop()
       motor1.disable();
       motor2.disable();
       debugln("Bluetooth connection disconnected...");
+      buzz.initBuzzer();
+      while(true)
+      {
+        if(Serial.available())
+          break;
+        else
+          redLed.toggle();  
+      }
       break;
       
       default:
-      debugln("Invalid input, please choose 1 - 9,q");
+      debugln("Invalid input");
+      //debug("\nInvalid input, please choose 1 - 9,q");
       break;
     }
   }
-//  else if(state == true)
-//  {
-//    redLed.toggle();
-////    if(state)
-////    {
-//      //state = false;
-//      debugln("Standby, please connect to bluetooth");
-////    }
-//  }
 }
