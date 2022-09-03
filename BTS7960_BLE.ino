@@ -82,12 +82,12 @@ void loop()
       debugln(motor2.pwm);
       //debug("\nRight: %d : %d", motor1.pwm, motor2.pwm);
       break;
-      
-      /*
+           
       case RIGHTSHIFT:
       blueLed.on();
       redLed.off();
-      //motor1.
+      motor1.front();
+      motor2.stop();
       debug("Right shift: ");
       debug(motor1.pwm);
       debug(" : ");
@@ -98,14 +98,38 @@ void loop()
       case LEFTSHIFT:
       blueLed.on();
       redLed.off();
-      //motor1.
+      motor1.stop();
+      motor2.front();
       debug("Left shift: ");
       debug(motor1.pwm);
       debug(" : ");
       debugln(motor2.pwm);
       //debug("\nLeft shift: %d : %d", motor1.pwm, motor2.pwm);
       break;
-      */
+     
+      case BACKRIGHT:
+      blueLed.on();
+      redLed.off();
+      motor1.stop();
+      motor2.back();
+      debug("Right Back: ");
+      debug(motor1.pwm);
+      debug(" : ");
+      debugln(motor2.pwm);
+      //debug("\nRight shift: %d : %d", motor1.pwm, motor2.pwm);
+      break;
+      
+      case BACKLEFT:
+      blueLed.on();
+      redLed.off();
+      motor1.back();
+      motor2.stop();
+      debug("Left Back: ");
+      debug(motor1.pwm);
+      debug(" : ");
+      debugln(motor2.pwm);
+      //debug("\nLeft shift: %d : %d", motor1.pwm, motor2.pwm);
+      break;
       
       case SPEED0:
       buzz.on();
@@ -266,11 +290,14 @@ void loop()
       motor1.disable();
       motor2.disable();
       debugln("Bluetooth connection disconnected...");
-      buzz.initBuzzer();
+      buzz.deinitBuzzer();
       while(true)
       {
         if(Serial.available())
+        {
+          initSystem();
           break;
+        }
         else
           redLed.toggle();  
       }
