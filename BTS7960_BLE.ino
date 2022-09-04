@@ -1,20 +1,7 @@
 #include "GLOBALS.h"
 
-void initSystem()
+void setup()
 {
-  debugln("System initlized, waiting for bluetooth connection...");
-  motor1.enable();                                                 //Makes all enable pins go high
-  motor2.enable();                                                 //Makes all enable pins go high
-  blueLed.on();                                                    //Turns the blue led on
-  redLed.on();                                                     //Turns the red led on
-  buzz.initBuzzer();                                               //puts the buzzer on
-  delay(2);
-  blueLed.off();                                                   //Turns the blue led on
-  redLed.on();                                                     //Turns the red led on
-  buzz.off();                                                      //Shutsdown the buzzer
-}
-
-void setup(){
   Serial.begin(9600);
   motor1.begin();
   motor2.begin();
@@ -22,228 +9,228 @@ void setup(){
   blueLed.begin();
   buzz.begin();
 
-  //initilize the system by turing on the leds and buzzer
-  initSystem();
-  
-  //State variable set to STOP initially
-  state = STOP;
+//initilize the system by turing on the leds and buzzer
+//  initSystem();
 }
 
 void loop()
-{   
-  if (Serial.available()) 
-      state = Serial.read();        //Read the state
-      
-  switch(state)
+{     
+  
+/*==========================================================ROBOT STATE MACHINE========================================================*/  
+  switch(motorStatus)
   {
-    case FRONT:
-    blueLed.on();
-    redLed.off();
+    case motorStates::FRONT:
     motor1.front();
     motor2.front();
     debug("Front: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::PASS;
+    ledStatus = ledStates::RUN;
     break;
     
-    case BACK:
-    blueLed.on();
-    redLed.off();
+    case motorStates::BACK:
     motor1.back();
     motor2.back();
     debug("Back: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::PASS;
+    ledStatus = ledStates::RUN;
     break;
     
-    case LEFT:
-    blueLed.on();
-    redLed.off();
+    case motorStates::LEFT:
     motor1.back();
     motor2.front();
     debug("Left: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::PASS;
+    ledStatus = ledStates::RUN;
     break;
     
-    case RIGHT:
-    blueLed.on();
-    redLed.off();
+    case motorStates::RIGHT:
     motor1.front();
     motor2.back();
     debug("Right: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::PASS;
+    ledStatus = ledStates::RUN;
     break;
          
-    case RIGHTSHIFT:
-    blueLed.on();
-    redLed.off();
+    case motorStates::RIGHTSHIFT:
     motor1.front();
     motor2.stop();
     debug("Right shift: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::PASS;
+    ledStatus = ledStates::RUN;
     break;
     
-    case LEFTSHIFT:
-    blueLed.on();
-    redLed.off();
+    case motorStates::LEFTSHIFT:
     motor1.stop();
     motor2.front();
     debug("Left shift: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::PASS;
+    ledStatus = ledStates::RUN;
     break;
    
-    case BACKRIGHT:
-    blueLed.on();
-    redLed.off();
+    case motorStates::BACKRIGHT:
     motor1.stop();
     motor2.back();
     debug("Right Back: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::PASS;
+    ledStatus = ledStates::RUN;
     break;
     
-    case BACKLEFT:
-    blueLed.on();
-    redLed.off();
+    case motorStates::BACKLEFT:
     motor1.back();
     motor2.stop();
     debug("Left Back: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::PASS;
+    ledStatus = ledStates::RUN;
     break;
 
-    case STOP:
-    buzz.off();
-    blueLed.off();
-    redLed.on();
+    case motorStates::STOP:
     motor1.stop();
     motor2.stop();
     debug("Stop: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::PASS;
+    ledStatus = ledStates::STOP;
     break;
     
-    case SPEED0:
-    buzz.on();
+    case motorStates::SPEED0:
     motor1.pwm = motor2.pwm = 0;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::ON;
+    ledStatus = ledStates::PASS;
     break;
     
-    case SPEED1:
-    buzz.off();
+    case motorStates::SPEED1:
     motor1.pwm = motor2.pwm = 25;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::OFF;
+    ledStatus = ledStates::PASS;
     break;
     
-    case SPEED2:
-    buzz.off();
+    case motorStates::SPEED2:
     motor1.pwm = motor2.pwm = 51;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::OFF;
+    ledStatus = ledStates::PASS;
     break;
     
-    case SPEED3:
-    buzz.off();
+    case motorStates::SPEED3:
     motor1.pwm = motor2.pwm = 76;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::OFF;
+    ledStatus = ledStates::PASS;
     break;
     
-    case SPEED4:
-    buzz.off();
+    case motorStates::SPEED4:
     motor1.pwm = motor2.pwm = 102;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::OFF;
+    ledStatus = ledStates::PASS;
     break;
     
-    case SPEED5:
-    buzz.off();
+    case motorStates::SPEED5:
     motor1.pwm = motor2.pwm = 127;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::OFF;
+    ledStatus = ledStates::PASS;
     break;
     
-    case SPEED6:
-    buzz.off();
+    case motorStates::SPEED6:
     motor1.pwm = motor2.pwm = 153;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::OFF;
+    ledStatus = ledStates::PASS;
     break;
     
-    case SPEED7:
-    buzz.off();
+    case motorStates::SPEED7:
     motor1.pwm = motor2.pwm = 178;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::OFF;
+    ledStatus = ledStates::PASS;
     break;
     
-    case SPEED8:
-    buzz.off();
+    case motorStates::SPEED8:
     motor1.pwm = motor2.pwm = 204;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::OFF;
+    ledStatus = ledStates::PASS;
     break;
     
-    case SPEED9:
-    buzz.off();
+    case motorStates::SPEED9:
     motor1.pwm = motor2.pwm = 229;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::OFF;
+    ledStatus = ledStates::PASS;
     break;
     
-    case MAXSPEED:
-    buzz.off();
+    case motorStates::MAXSPEED:
     motor1.pwm = motor2.pwm = 255;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
+    buzzStatus = buzzStates::OFF;
+    ledStatus = ledStates::PASS;
     break;
 
-    case STOPALL:
-    buzz.off();
-    blueLed.off();
-    redLed.off();
-    motor1.disable();
-    motor2.disable();
-    debugln("Bluetooth connection disconnected...");
-    buzz.deinitBuzzer();
-    while(1)
+    case motorStates::STOPALL:
+    standbySystem();
+    while(true)
     {
       if(Serial.available())
       {
@@ -252,9 +239,108 @@ void loop()
       }
       else
         redLed.toggle();
-    }  
-
-    default:  debugln("Invalid input");
+    }
     break;
+
+    case motorStates::EXTRAON:                            //Same as EXTRAOFF
+    standbySystem();
+    while(true)
+    {
+      motorStatus = (motorStates)Serial.read();
+      if(motorStates::EXTRAOFF == motorStatus)
+      {
+        initSystem();
+        break;
+      }
+      else if(motorStates::STOPALL == motorStatus)
+      {
+        break;
+      }
+      else
+        redLed.toggle();
+    }
+    break;
+    
+    case motorStates::EXTRAOFF:                           //Same as EXTRAON
+    standbySystem();
+    while(true)
+    {
+      motorStatus = (motorStates)Serial.read();
+      if(motorStates::EXTRAOFF == motorStatus)
+      {
+        initSystem();
+        break;
+      }
+      else if(motorStates::STOPALL == motorStatus)
+      {
+        break;
+      }
+      else
+        redLed.toggle();
+    }
+    break;
+    break;
+
+    case motorStates::FRONTLIGHTSON:
+    //Do nothing for now
+    break;
+    case motorStates::FRONTLIGHTSOFF:
+    //Do nothing for now
+    break;
+    case motorStates::BACKLIGHTSON:
+    //Do nothing for now
+    break;
+    case motorStates::BACKLIGHTSOFF:
+    //Do nothing for now
+    break;
+    case motorStates::HORNON:
+    //Do nothing for now
+    break;
+    case motorStates::HORNOFF:
+    //Do nothing for now
+    break;
+
+    default: debugln("Invalid input");
   }
+
+/*==========================================================BUZZER STATE MACHINE========================================================*/
+  switch(buzzStatus)
+  {
+    case buzzStates::ON:
+    buzz.on();
+    break;
+
+    case buzzStates::OFF:
+    buzz.off();
+    break;
+
+    case buzzStates::PASS:
+    //Do nothing
+    break;
+
+    default: debugln("Invalid input");
+  }
+
+/*===========================================================LED STATE MACHINE=========================================================*/
+  switch(ledStatus)
+  {
+    case ledStates::STOP:
+    blueLed.off();
+    redLed.on();
+    break;
+    
+    case ledStates::RUN:
+    blueLed.on();
+    redLed.off();
+    break;
+
+    case ledStates::PASS:
+    //Do nothing
+    break;
+
+    default: debugln("Invalid input");
+  }
+  
+  if (Serial.available()) 
+    motorStatus = (motorStates)Serial.read();        //Read the state
 }

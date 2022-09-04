@@ -18,9 +18,6 @@
   #define debugln(x) 
 #endif
 
-//state for switch case
-uint8_t state;                                                
-
 //Led definition section
 #define redLedPin A4  //use between 150 ohms to 330 ohms resistor
 #define blueLedPin 3
@@ -47,48 +44,97 @@ uint8_t state;
 /*=====================================================  Object declaration=============================================================*/
 BTS7960 motor1(L_EN1, R_EN1, LPWM1, RPWM1);                           //Create an object of class motor1
 BTS7960 motor2(L_EN2, R_EN2, RPWM2, LPWM2);                           //Create an object of class motor2 should have been LPWM2, RPWM2
-led redLed(redLedPin);                                    //Create object for red led
-led blueLed(blueLedPin);                                  //Create object for blue led
+led redLed(redLedPin);                                                //Create object for red led
+led blueLed(blueLedPin);                                              //Create object for blue led
 buzzer buzz(buzzpin);                                                 //Create object for buzzer
-/*======================================================================================================================================*/
+
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++MOTOR STATES++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+enum class motorStates : uint8_t
+{
+   FRONT = 'F',
+   BACK = 'B',
+   LEFT = 'L',
+   RIGHT = 'R',
+   LEFTSHIFT = 'G',
+   RIGHTSHIFT = 'I',
+   BACKLEFT = 'H',
+   BACKRIGHT = 'J',
+   STOP = 'S',
+   STOPALL = 'D',
+   FRONTLIGHTSON = 'W',
+   FRONTLIGHTSOFF = 'w',
+   BACKLIGHTSON = 'U',
+   BACKLIGHTSOFF = 'u',
+   HORNON = 'V',
+   HORNOFF = 'v',
+   EXTRAON = 'X',
+   EXTRAOFF = 'x',
+   SPEED0 = '0',
+   SPEED1 = '1',
+   SPEED2 = '2',
+   SPEED3 = '3',
+   SPEED4 = '4',
+   SPEED5 = '5',
+   SPEED6 = '6',
+   SPEED7 = '7',
+   SPEED8 = '8',
+   SPEED9 = '9',
+   MAXSPEED = 'q'
+};
+
+enum class buzzStates : uint8_t
+{
+  OFF,
+  ON,
+  PASS
+};
+
+enum class ledStates : uint8_t
+{
+  STOP,
+  RUN,
+  PASS
+};
+
+motorStates motorStatus = motorStates::STOPALL;                   //State variable set to STOP initially
+//motorStates motorPrevStatus;                                    //Previous motor state
+buzzStates buzzStatus = buzzStates::PASS;                         //Buzzer state initilally is set to pass
+ledStates ledStatus = ledStates::PASS;                            //Led state initilally is set to pass
 
 /*==================================================Function prototyping section========================================================*/
-inline void initSystem();
+inline void initSystem() __attribute__((always_inline));
+inline void standbySystem() __attribute__((always_inline));
+
 /*======================================================================================================================================*/
 
+void initSystem()
+{
+  debugln("System initlized, waiting for bluetooth connection...");
+  motor1.enable();                                                 //Makes all enable pins go high
+  motor2.enable();                                                 //Makes all enable pins go high
+  blueLed.on();                                                    //Turns the blue led on
+  redLed.on();                                                     //Turns the red led on
+  buzz.initBuzzer();                                               //puts the buzzer on
+  delay(2);
+  blueLed.off();                                                   //Turns the blue led on
+  redLed.on();                                                     //Turns the red led on
+  motorStatus = motorStates::STOP;                                 //State variable set to STOP initially
+  buzzStates buzzStatus = buzzStates::PASS;                        //Buzzer state initilally is set to pass
+  ledStates ledStatus = ledStates::STOP;                           //Led state initilally is set to pass 
+}
 
-/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++STATES+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-#define FRONT 'F'
-#define BACK 'B'
-#define LEFT 'L'
-#define RIGHT 'R'
-#define LEFTSHIFT 'G'
-#define RIGHTSHIFT 'I'
-#define BACKLEFT 'H'
-#define BACKRIGHT 'J'
-#define STOP 'S'
-#define STOPALL 'D'
-#define FRONTLIGHTSON 'W'
-#define FRONTLIGHTSOFF 'w'
-#define BACKLIGHTSON 'U'
-#define BACKLIGHTSOFF 'u'
-#define HORNON 'V'
-#define HORNOFF 'v'
-#define EXTRAON 'X'
-#define EXTRAOFF 'x'
-#define SPEED0 '0'
-#define SPEED1 '1'
-#define SPEED2 '2'
-#define SPEED3 '3'
-#define SPEED4 '4'
-#define SPEED5 '5'
-#define SPEED6 '6'
-#define SPEED7 '7'
-#define SPEED8 '8'
-#define SPEED9 '9'
-#define MAXSPEED 'q'
+void standbySystem()
+{
+  debugln("Bluetooth disconnected...");
+  blueLed.off();
+  redLed.off();
+  motor1.disable();
+  motor2.disable();
+  buzz.deinitBuzzer();  
+}
 
-/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
 
 //namespace light
 //{

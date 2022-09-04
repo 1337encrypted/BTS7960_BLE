@@ -70,16 +70,20 @@ void buzzer::initBuzzer()
   noTone(buzzpin);
 }
 
-void buzzer::on()
-{
-  digitalWrite(buzzpin, HIGH);
-  //delay(1000);
-}
-
-
 void buzzer::off()
 {
-  digitalWrite(buzzpin, LOW);  
+  noTone(buzzpin);
+}
+
+void buzzer::on()
+{
+  static unsigned long buzzMillis = millis();                   //Assigns the current snapshot of time only the first
+                                                                //time this code executes
+  if(millis() - buzzMillis > 10)
+  {
+    tone(buzzpin, 1000, 100);
+    buzzMillis = millis();  
+  }
 }
 
 #endif  //END BUZZER_H
