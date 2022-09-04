@@ -138,8 +138,7 @@ void loop()
     
     case SPEED0:
     buzz.on();
-    motor1.pwm = 0;
-    motor2.pwm = 0;
+    motor1.pwm = motor2.pwm = 0;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
@@ -148,8 +147,7 @@ void loop()
     
     case SPEED1:
     buzz.off();
-    motor1.pwm = 25;
-    motor2.pwm = 25;
+    motor1.pwm = motor2.pwm = 25;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
@@ -158,8 +156,7 @@ void loop()
     
     case SPEED2:
     buzz.off();
-    motor1.pwm = 51;
-    motor2.pwm = 51;
+    motor1.pwm = motor2.pwm = 51;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
@@ -168,8 +165,7 @@ void loop()
     
     case SPEED3:
     buzz.off();
-    motor1.pwm = 76;
-    motor2.pwm = 76;
+    motor1.pwm = motor2.pwm = 76;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
@@ -178,8 +174,7 @@ void loop()
     
     case SPEED4:
     buzz.off();
-    motor1.pwm = 102;
-    motor2.pwm = 102;
+    motor1.pwm = motor2.pwm = 102;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
@@ -188,8 +183,7 @@ void loop()
     
     case SPEED5:
     buzz.off();
-    motor1.pwm = 127;
-    motor2.pwm = 127;
+    motor1.pwm = motor2.pwm = 127;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
@@ -198,8 +192,7 @@ void loop()
     
     case SPEED6:
     buzz.off();
-    motor1.pwm = 153;
-    motor2.pwm = 153;
+    motor1.pwm = motor2.pwm = 153;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
@@ -208,8 +201,7 @@ void loop()
     
     case SPEED7:
     buzz.off();
-    motor1.pwm = 178;
-    motor2.pwm = 178;
+    motor1.pwm = motor2.pwm = 178;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
@@ -218,8 +210,7 @@ void loop()
     
     case SPEED8:
     buzz.off();
-    motor1.pwm = 204;
-    motor2.pwm = 204;
+    motor1.pwm = motor2.pwm = 204;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
@@ -228,8 +219,7 @@ void loop()
     
     case SPEED9:
     buzz.off();
-    motor1.pwm = 229;
-    motor2.pwm = 229;
+    motor1.pwm = motor2.pwm = 229;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
@@ -238,8 +228,7 @@ void loop()
     
     case MAXSPEED:
     buzz.off();
-    motor1.pwm = 255;
-    motor2.pwm = 255;
+    motor1.pwm = motor2.pwm = 255;
     debug("Speed: ");
     debug(motor1.pwm);
     debug(" : ");
@@ -255,12 +244,9 @@ void loop()
     debugln("Bluetooth connection disconnected...");
     buzz.deinitBuzzer();
     if(Serial.available())
-    {
       initSystem();
-      break;
-    }
     else
-        redLed.toggle();  
+      redLed.toggle();  
     break;
 
     default:  debugln("Invalid input");
