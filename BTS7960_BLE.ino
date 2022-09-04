@@ -121,6 +121,7 @@ void loop()
     debugln(motor2.pwm);
     break;
 
+
     case STOP:
     buzz.off();
     blueLed.off();
@@ -251,6 +252,7 @@ void loop()
     redLed.off();
     motor1.disable();
     motor2.disable();
+    debugln("Bluetooth connection disconnected...");
     buzz.deinitBuzzer();
     while(true)
     {
@@ -261,11 +263,13 @@ void loop()
       }
       else
         redLed.toggle();  
+      }
+      else
+        redLed.toggle();  
     }
     break;
     
-    default:
-    debugln("Invalid input");
+    default:  debugln("Invalid input");
     break;
   }
 }
