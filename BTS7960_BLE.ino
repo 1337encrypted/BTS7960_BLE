@@ -1,102 +1,268 @@
-#include "BTS7960_BLE.h"
-#include <IBusBM.h>
+#include "GLOBALS.h"
 
-#define DEBUG 0
+void initSystem()
+{
+  debugln("System initlized, waiting for bluetooth connection...");
+  motor1.enable();                                                 //Makes all enable pins go high
+  motor2.enable();                                                 //Makes all enable pins go high
+  blueLed.on();                                                    //Turns the blue led on
+  redLed.on();                                                     //Turns the red led on
+  buzz.initBuzzer();                                               //puts the buzzer on
+  delay(2);
+  blueLed.off();                                                   //Turns the blue led on
+  redLed.on();                                                     //Turns the red led on
+  buzz.off();                                                      //Shutsdown the buzzer
+}
 
-#if DEBUG == 1
-#define debug(x) Serial.print(x)
-#define debugln(x) Serial.println(x)
-#else
-#define debug(x)
-#define debugln(x)
-#endif
+void setup()
+{
+  Serial.begin(9600);
+  motor1.begin();
+  motor2.begin();
+  redLed.begin();
+  blueLed.begin();
+  buzz.begin();
 
-BTS7960_BLE car;                                   //Create an object of class car
-uint8_t key;                                       //Key for the switch case
+  //initilize the system by turing on the leds and buzzer
+  initSystem();
   
-void setup(){
-  Serial.begin(9600); 
+  //State variable set to STOP initially
+  state = STOP;
 }
 
 void loop()
-{
-  if (Serial.available() > 0)
-  {  
-    key=Serial.read();
-    car.Stp();
-    switch(key)
+{   
+  switch(state)
+  {
+    case FRONT:
+    blueLed.on();
+    redLed.off();
+    motor1.front();
+    motor2.front();
+    debug("Front: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+    
+    case BACK:
+    blueLed.on();
+    redLed.off();
+    motor1.back();
+    motor2.back();
+    debug("Back: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+    
+    case LEFT:
+    blueLed.on();
+    redLed.off();
+    motor1.back();
+    motor2.front();
+    debug("Left: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+    
+    case RIGHT:
+    blueLed.on();
+    redLed.off();
+    motor1.front();
+    motor2.back();
+    debug("Right: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+         
+    case RIGHTSHIFT:
+    blueLed.on();
+    redLed.off();
+    motor1.front();
+    motor2.stop();
+    debug("Right shift: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+    
+    case LEFTSHIFT:
+    blueLed.on();
+    redLed.off();
+    motor1.stop();
+    motor2.front();
+    debug("Left shift: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+   
+    case BACKRIGHT:
+    blueLed.on();
+    redLed.off();
+    motor1.stop();
+    motor2.back();
+    debug("Right Back: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+    
+    case BACKLEFT:
+    blueLed.on();
+    redLed.off();
+    motor1.back();
+    motor2.stop();
+    debug("Left Back: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+
+    case STOP:
+    buzz.off();
+    blueLed.off();
+    redLed.on();
+    motor1.stop();
+    motor2.stop();
+    debug("Stop: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    if (Serial.available()) 
+      state = Serial.read();        //Read the state
+    break;
+    
+    case SPEED0:
+    buzz.on();
+    motor1.pwm = 0;
+    motor2.pwm = 0;
+    debug("Speed: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+    
+    case SPEED1:
+    buzz.off();
+    motor1.pwm = 25;
+    motor2.pwm = 25;
+    debug("Speed: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+    
+    case SPEED2:
+    buzz.off();
+    motor1.pwm = 51;
+    motor2.pwm = 51;
+    debug("Speed: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+    
+    case SPEED3:
+    buzz.off();
+    motor1.pwm = 76;
+    motor2.pwm = 76;
+    debug("Speed: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+    
+    case SPEED4:
+    buzz.off();
+    motor1.pwm = 102;
+    motor2.pwm = 102;
+    debug("Speed: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+    
+    case SPEED5:
+    buzz.off();
+    motor1.pwm = 127;
+    motor2.pwm = 127;
+    debug("Speed: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+    
+    case SPEED6:
+    buzz.off();
+    motor1.pwm = 153;
+    motor2.pwm = 153;
+    debug("Speed: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+    
+    case SPEED7:
+    buzz.off();
+    motor1.pwm = 178;
+    motor2.pwm = 178;
+    debug("Speed: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+    
+    case SPEED8:
+    buzz.off();
+    motor1.pwm = 204;
+    motor2.pwm = 204;
+    debug("Speed: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+    
+    case SPEED9:
+    buzz.off();
+    motor1.pwm = 229;
+    motor2.pwm = 229;
+    debug("Speed: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+    
+    case MAXSPEED:
+    buzz.off();
+    motor1.pwm = 255;
+    motor2.pwm = 255;
+    debug("Speed: ");
+    debug(motor1.pwm);
+    debug(" : ");
+    debugln(motor2.pwm);
+    break;
+
+    case STOPALL:
+    buzz.off();
+    blueLed.off();
+    redLed.off();
+    motor1.disable();
+    motor2.disable();
+    buzz.deinitBuzzer();
+    if(Serial.available())
     {
-      case 'F':
-        car.front();
-        debugln("Foreward");
-        break;
-      case 'B':
-        car.back();
-        debugln("Backward");
-        break;
-      case 'L':
-        car.leftTurn();
-        debugln("Left");
-        break;
-      case 'R':
-        car.rightTurn();
-        debugln("Right");
-        break;
-      /*
-      case 'I':
-        car.rightShift();
-        debugln("Right Shift");
-        break;
-      case 'G':
-        car.leftShift();
-        debugln("Left Shift");
-        break;
-        */
-      case '0':
-        car.Speed = 115;
-        debugln("car.Speed = 115");
-        break;
-      case '1':
-        car.Speed = 130;
-        debugln("car.Speed = 130");
-        break;
-      case '2':
-        car.Speed = 143;
-        debugln("car.Speed = 143");
-        break;
-      case '3':
-        car.Speed = 157;
-        debugln("car.Speed = 157");
-        break;
-      case '4':
-        car.Speed = 170;
-        debugln("car.Speed = 170");
-        break;
-      case '5':
-        car.Speed = 185;
-        debugln("car.Speed = 185");
-        break;
-      case '6':
-        car.Speed = 200;
-        debugln("car.Speed = 200");
-        break;
-      case '7':
-        car.Speed = 213;
-        debugln("car.Speed = 213");
-        break;
-      case '8':
-        car.Speed = 227;
-        debugln("car.Speed = 227");
-        break;
-      case '9':
-        car.Speed = 240;
-        debugln("car.Speed = 240");
-        break;
-      case 'q':
-        car.Speed = 255;
-        debugln("car.Speed = 255");
-        break;
-      default: debugln("Invalid input, please choose 1 - 9,q");
+      initSystem();
+      break;
     }
+    else
+      redLed.toggle();  
+    break;
+    
+    default:debugln("Invalid input");
+    break;
   }
 }
