@@ -31,6 +31,9 @@ void setup(){
 
 void loop()
 {   
+  if (Serial.available()) 
+      state = Serial.read();        //Read the state
+      
   switch(state)
   {
     case FRONT:
@@ -121,7 +124,6 @@ void loop()
     debugln(motor2.pwm);
     break;
 
-
     case STOP:
     buzz.off();
     blueLed.off();
@@ -132,8 +134,6 @@ void loop()
     debug(motor1.pwm);
     debug(" : ");
     debugln(motor2.pwm);
-    if (Serial.available()) 
-      state = Serial.read();        //Read the state
     break;
     
     case SPEED0:
@@ -243,11 +243,16 @@ void loop()
     motor2.disable();
     debugln("Bluetooth connection disconnected...");
     buzz.deinitBuzzer();
-    if(Serial.available())
-      initSystem();
-    else
-      redLed.toggle();  
-    break;
+    while(1)
+    {
+      if(Serial.available())
+      {
+        initSystem();
+        break;
+      }
+      else
+        redLed.toggle();
+    }  
 
     default:  debugln("Invalid input");
     break;
