@@ -18,6 +18,7 @@ class buzzer
   //Function prototype
   inline buzzer() __attribute__((always_inline));
   inline buzzer(uint8_t) __attribute__((always_inline));
+  inline ~buzzer() __attribute__((always_inline));
   inline void begin() __attribute__((always_inline));
   inline void initBuzzer() __attribute__((always_inline));
   inline void deinitBuzzer() __attribute__((always_inline));
@@ -40,6 +41,12 @@ buzzer::buzzer(uint8_t buzzpin)
   //Initilize the buzzer
   this->buzzpin = buzzpin;
   //__initBuzzer();
+}
+
+//Destructor
+buzzer::~buzzer()
+{
+  Serial.println("buzzer object destroyed"); 
 }
 
 void buzzer::begin()

@@ -1,4 +1,4 @@
-#include "BTS7960.h"
+#include <BTS7960.h>
 #include "BUZZER.h"
 #include "LED.h"
 
@@ -132,6 +132,12 @@ void standbySystem()
   motor1.disable();
   motor2.disable();
   buzz.deinitBuzzer();  
+//Destructors
+//  motor1.~BTS7960();
+//  motor2.~BTS7960();
+//  buzz.~buzzer();
+//  redLed.~led();
+//  blueLed.~led();
 }
 
 

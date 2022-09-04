@@ -279,7 +279,6 @@ void loop()
         redLed.toggle();
     }
     break;
-    break;
 
     case motorStates::FRONTLIGHTSON:
     //Do nothing for now

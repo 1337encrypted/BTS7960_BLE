@@ -20,6 +20,7 @@ class led
   //Function prototypes
   inline led() __attribute__((always_inline));
   inline led(uint8_t) __attribute__((always_inline));
+  inline ~led() __attribute__((always_inline));
   inline void begin() __attribute__((always_inline));
   inline void on() __attribute__((always_inline));
   inline void off() __attribute__((always_inline));
@@ -40,6 +41,12 @@ led::led(uint8_t ledPin)
   //Initilize the ledPin pins
   this->ledPin = ledPin;
   //this->pwm = pwm;
+}
+
+//Destructor
+led::~led()
+{
+  Serial.println("led object destroyed");
 }
 
 void led::begin()
