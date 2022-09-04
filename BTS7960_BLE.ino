@@ -14,8 +14,7 @@ void initSystem()
   buzz.off();                                                      //Shutsdown the buzzer
 }
 
-void setup()
-{
+void setup(){
   Serial.begin(9600);
   motor1.begin();
   motor2.begin();
@@ -121,6 +120,7 @@ void loop()
     debug(" : ");
     debugln(motor2.pwm);
     break;
+
 
     case STOP:
     buzz.off();
@@ -252,6 +252,7 @@ void loop()
     redLed.off();
     motor1.disable();
     motor2.disable();
+    debugln("Bluetooth connection disconnected...");
     buzz.deinitBuzzer();
     if(Serial.available())
     {
@@ -259,10 +260,10 @@ void loop()
       break;
     }
     else
-      redLed.toggle();  
+        redLed.toggle();  
     break;
-    
-    default:debugln("Invalid input");
+
+    default:  debugln("Invalid input");
     break;
   }
 }
