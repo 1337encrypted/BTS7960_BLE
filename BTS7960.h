@@ -1,6 +1,6 @@
 /*
  * BTS7960.h - Library for controlling a brushed DC motor using the BTS7960 motor driver.
- * Created by Yash Herekar, August 24, 2022.
+ * Created by Yash Herekar, August 31, 2022.
  * Released into the public domain.
  */
 

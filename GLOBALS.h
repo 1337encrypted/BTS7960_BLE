@@ -12,47 +12,15 @@
 #define DEBUG 1
 
 #if DEBUG == 1
-//#define debug(x,y,z) printf(x,y,z)
-#define debug(x) Serial.print(x)
-#define debugln(x) Serial.println(x)
+  #define debug(x) Serial.print(x)
+  #define debugln(x) Serial.println(x)
 #else
-//#define debug(x,y,z)
-#define debug(x)
-#define debugln(x) 
+  #define debug(x)
+  #define debugln(x) 
 #endif
 
-
-#define FRONT 'F'
-#define BACK 'B'
-#define LEFT 'L'
-#define RIGHT 'R'
-#define LEFTSHIFT 'G'
-#define RIGHTSHIFT 'I'
-#define BACKLEFT 'H'
-#define BACKRIGHT 'J'
-#define STOP 'S'
-#define STOPALL 'D'
-#define FRONTLIGHTSON 'W'
-#define FRONTLIGHTSOFF 'w'
-#define BACKLIGHTSON 'U'
-#define BACKLIGHTSOFF 'u'
-#define HORNON 'V'
-#define HORNOFF 'v'
-#define EXTRAON 'X'
-#define EXTRAOFF 'x'
-#define SPEED0 '0'
-#define SPEED1 '1'
-#define SPEED2 '2'
-#define SPEED3 '3'
-#define SPEED4 '4'
-#define SPEED5 '5'
-#define SPEED6 '6'
-#define SPEED7 '7'
-#define SPEED8 '8'
-#define SPEED9 '9'
-#define MAXSPEED 'q'
-
-uint8_t state = STOPALL;                                                //state for switch case
+//state for switch case
+uint8_t state;                                                
 
 //Led definition section
 #define redLedPin A4  //use between 150 ohms to 330 ohms resistor
@@ -88,6 +56,38 @@ buzzer buzz(buzzpin);                                                 //Create o
 /*==================================================Function prototyping section========================================================*/
 inline void initSystem();
 /*======================================================================================================================================*/
+
+
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++STATES+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+#define FRONT 'F'
+#define BACK 'B'
+#define LEFT 'L'
+#define RIGHT 'R'
+#define LEFTSHIFT 'G'
+#define RIGHTSHIFT 'I'
+#define BACKLEFT 'H'
+#define BACKRIGHT 'J'
+#define STOP 'S'
+#define STOPALL 'D'
+#define FRONTLIGHTSON 'W'
+#define FRONTLIGHTSOFF 'w'
+#define BACKLIGHTSON 'U'
+#define BACKLIGHTSOFF 'u'
+#define HORNON 'V'
+#define HORNOFF 'v'
+#define EXTRAON 'X'
+#define EXTRAOFF 'x'
+#define SPEED0 '0'
+#define SPEED1 '1'
+#define SPEED2 '2'
+#define SPEED3 '3'
+#define SPEED4 '4'
+#define SPEED5 '5'
+#define SPEED6 '6'
+#define SPEED7 '7'
+#define SPEED8 '8'
+#define SPEED9 '9'
+#define MAXSPEED 'q'
 
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
