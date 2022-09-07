@@ -8,9 +8,6 @@ void setup()
   redLed.begin();
   blueLed.begin();
   buzz.begin();
-
-//initilize the system by turing on the leds and buzzer
-//  initSystem();
 }
 
 void loop()
@@ -20,210 +17,140 @@ void loop()
   switch(motorStatus)
   {
     case motorStates::FRONT:
-    motor1.front();
-    motor2.front();
-    debug("Front: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    motor1.front(); motor2.front();
+    debug("Front: "); debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::PASS;
     ledStatus = ledStates::RUN;
     break;
     
     case motorStates::BACK:
-    motor1.back();
-    motor2.back();
-    debug("Back: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    motor1.back();  motor2.back();
+    debug("Back: ");  debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::PASS;
     ledStatus = ledStates::RUN;
     break;
     
     case motorStates::LEFT:
-    motor1.back();
-    motor2.front();
-    debug("Left: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    motor1.back();  motor2.front();
+    debug("Left: ");  debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::PASS;
     ledStatus = ledStates::RUN;
     break;
     
     case motorStates::RIGHT:
-    motor1.front();
-    motor2.back();
-    debug("Right: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    motor1.front(); motor2.back();
+    debug("Right: "); debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::PASS;
     ledStatus = ledStates::RUN;
     break;
          
     case motorStates::RIGHTSHIFT:
-    motor1.front();
-    motor2.stop();
-    debug("Right shift: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    motor1.front(); motor2.stop();  debug("Right shift: "); debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::PASS;
     ledStatus = ledStates::RUN;
     break;
     
     case motorStates::LEFTSHIFT:
-    motor1.stop();
-    motor2.front();
-    debug("Left shift: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    motor1.stop();  motor2.front(); 
+    debug("Left shift: ");  debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::PASS;
     ledStatus = ledStates::RUN;
     break;
    
     case motorStates::BACKRIGHT:
-    motor1.stop();
-    motor2.back();
-    debug("Right Back: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    motor1.stop();  motor2.back();
+    debug("Right Back: ");  debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::PASS;
     ledStatus = ledStates::RUN;
     break;
     
     case motorStates::BACKLEFT:
-    motor1.back();
-    motor2.stop();
-    debug("Left Back: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    motor1.back();  motor2.stop();
+    debug("Left Back: "); debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::PASS;
     ledStatus = ledStates::RUN;
     break;
 
     case motorStates::STOP:
-    motor1.stop();
-    motor2.stop();
-    debug("Stop: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    motor1.stop();  motor2.stop();
+    debug("Stop: ");  debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::PASS;
     ledStatus = ledStates::STOP;
     break;
     
     case motorStates::SPEED0:
     motor1.pwm = motor2.pwm = 0;
-    debug("Speed: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    debug("Speed: "); debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::ON;
     ledStatus = ledStates::PASS;
     break;
     
     case motorStates::SPEED1:
     motor1.pwm = motor2.pwm = 25;
-    debug("Speed: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    debug("Speed: "); debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::OFF;
     ledStatus = ledStates::PASS;
     break;
     
     case motorStates::SPEED2:
     motor1.pwm = motor2.pwm = 51;
-    debug("Speed: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    debug("Speed: "); debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::OFF;
     ledStatus = ledStates::PASS;
     break;
     
     case motorStates::SPEED3:
     motor1.pwm = motor2.pwm = 76;
-    debug("Speed: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    debug("Speed: "); debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::OFF;
     ledStatus = ledStates::PASS;
     break;
     
     case motorStates::SPEED4:
     motor1.pwm = motor2.pwm = 102;
-    debug("Speed: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    debug("Speed: "); debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::OFF;
     ledStatus = ledStates::PASS;
     break;
     
     case motorStates::SPEED5:
     motor1.pwm = motor2.pwm = 127;
-    debug("Speed: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    debug("Speed: "); debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::OFF;
     ledStatus = ledStates::PASS;
     break;
     
     case motorStates::SPEED6:
     motor1.pwm = motor2.pwm = 153;
-    debug("Speed: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    debug("Speed: "); debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::OFF;
     ledStatus = ledStates::PASS;
     break;
     
     case motorStates::SPEED7:
     motor1.pwm = motor2.pwm = 178;
-    debug("Speed: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    debug("Speed: "); debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::OFF;
     ledStatus = ledStates::PASS;
     break;
     
     case motorStates::SPEED8:
     motor1.pwm = motor2.pwm = 204;
-    debug("Speed: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    debug("Speed: "); debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::OFF;
     ledStatus = ledStates::PASS;
     break;
     
     case motorStates::SPEED9:
     motor1.pwm = motor2.pwm = 229;
-    debug("Speed: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    debug("Speed: "); debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::OFF;
     ledStatus = ledStates::PASS;
     break;
     
     case motorStates::MAXSPEED:
     motor1.pwm = motor2.pwm = 255;
-    debug("Speed: ");
-    debug(motor1.pwm);
-    debug(" : ");
-    debugln(motor2.pwm);
+    debug("Speed: "); debug(motor1.pwm);  debug(" : "); debugln(motor2.pwm);
     buzzStatus = buzzStates::OFF;
     ledStatus = ledStates::PASS;
     break;
@@ -281,21 +208,27 @@ void loop()
     break;
 
     case motorStates::FRONTLIGHTSON:
+    debugln("Front lights on");
     //Do nothing for now
     break;
     case motorStates::FRONTLIGHTSOFF:
+    debugln("Front lights off");
     //Do nothing for now
     break;
     case motorStates::BACKLIGHTSON:
+    debugln("Back lights on");
     //Do nothing for now
     break;
     case motorStates::BACKLIGHTSOFF:
+    debugln("Back lights off");
     //Do nothing for now
     break;
     case motorStates::HORNON:
+    debugln("Horn on");
     //Do nothing for now
     break;
     case motorStates::HORNOFF:
+    debugln("Horn off");
     //Do nothing for now
     break;
 

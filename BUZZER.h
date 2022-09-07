@@ -11,7 +11,6 @@
 class buzzer
 {
   private:
-  //buzzer for low speed feedback
   uint8_t buzzpin;
 
   public:
@@ -32,15 +31,13 @@ buzzer::buzzer()
 {
   //Initilize the buzzer
   this->buzzpin = A5;
-  //__initBuzzer();
 }
 
 //Parametrized constructor
-buzzer::buzzer(uint8_t buzzpin)
+buzzer::buzzer(const uint8_t buzzpin)
 {
   //Initilize the buzzer
   this->buzzpin = buzzpin;
-  //__initBuzzer();
 }
 
 //Destructor

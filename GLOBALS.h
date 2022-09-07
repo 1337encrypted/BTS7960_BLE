@@ -19,27 +19,27 @@
 #endif
 
 //Led definition section
-#define redLedPin A4  //use between 150 ohms to 330 ohms resistor
-#define blueLedPin 3
+const uint8_t redLedPin = A4;  //use between 150 ohms to 330 ohms resistor
+const uint8_t blueLedPin = 3;
 
 //Buzzer definition section
 #define buzzpin 2 //Active buzzer use 100 ohms resistor
 
 //BTS7960 motor driver 2 pin definitions
-#define R_EN1 7
-#define L_EN1 8
-#define RPWM1 6   //PWM 490hz
-#define LPWM1 5   //PWM 980hz
-//#define R_IS1   //Alarm pin
-//#define L_IS1   //Alarm pin
+const uint8_t R_EN1 = 7;  
+const uint8_t L_EN1 = 8;
+const uint8_t RPWM1 = 6;    //PWM 490hz
+const uint8_t LPWM1 = 5;    //PWM 980hz
+//const uint8_t R_IS1       //Alarm pin
+//const uint8_t L_IS1       //Alarm pin
 
 //BTS7960 motor driver 2 pin definitions
-#define R_EN2 A0
-#define L_EN2 A1
-#define RPWM2 9   //PWM 980hz
-#define LPWM2 10  //PWM 490hz
-//#define R_IS2   //Alarm pin
-//#define L_IS2   //Alarm pin                                                     //Key for the switch case
+const uint8_t R_EN2 = A0;
+const uint8_t L_EN2 = A1;
+const uint8_t RPWM2 = 9;       //PWM 980hz
+const uint8_t LPWM2 = 10;      //PWM 490hz
+//const uint8_t R_IS2        //Alarm pin
+//const uint8_t L_IS2        //Alarm pin                                                     //Key for the switch case
 
 /*=====================================================  Object declaration=============================================================*/
 BTS7960 motor1(L_EN1, R_EN1, LPWM1, RPWM1);                           //Create an object of class motor1
@@ -111,8 +111,7 @@ inline void standbySystem() __attribute__((always_inline));
 void initSystem()
 {
   debugln("System initlized, waiting for bluetooth connection...");
-  motor1.enable();                                                 //Makes all enable pins go high
-  motor2.enable();                                                 //Makes all enable pins go high
+  motor1.enable();  motor2.enable();                               //Makes all enable pins go high
   blueLed.on();                                                    //Turns the blue led on
   redLed.on();                                                     //Turns the red led on
   buzz.initBuzzer();                                               //puts the buzzer on
@@ -127,32 +126,9 @@ void initSystem()
 void standbySystem()
 {
   debugln("Bluetooth disconnected...");
-  blueLed.off();
-  redLed.off();
-  motor1.disable();
-  motor2.disable();
+  blueLed.off();  redLed.off();
+  motor1.disable(); motor2.disable();
   buzz.deinitBuzzer();  
-//Destructors
-//  motor1.~BTS7960();
-//  motor2.~BTS7960();
-//  buzz.~buzzer();
-//  redLed.~led();
-//  blueLed.~led();
 }
 
-
-
-//namespace light
-//{
-//  void stopMotors()
-//  {
-//    redLed.ledOff();
-//    blueLed.ledOff();  
-//  }
-//  
-//  void runMotors()
-//  {
-//    redLed.ledOn();
-//    blueLed.ledOn();
-//  }
-//}
+//namespaces here

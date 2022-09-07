@@ -15,7 +15,6 @@ class led
   uint8_t ledPin;
 
   public:
-  //uint8_t pwm;
   
   //Function prototypes
   inline led() __attribute__((always_inline));
@@ -32,7 +31,6 @@ led::led()
 {
   //Initilize the ledPin pins
   this->ledPin = 13;
-  //this->pwm = 255;
 }
 
 //parametrized constructor
@@ -40,7 +38,6 @@ led::led(uint8_t ledPin)
 {
   //Initilize the ledPin pins
   this->ledPin = ledPin;
-  //this->pwm = pwm;
 }
 
 //Destructor
