@@ -1,6 +1,6 @@
+#include <BUZZER.h>
 #include <BTS7960.h>
-#include "BUZZER.h"
-#include "LED.h"
+#include <LED.h>
 
 /* 
  * Debug on and off enables code optimization
