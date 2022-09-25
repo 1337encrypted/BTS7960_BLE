@@ -1,5 +1,5 @@
 #include <BUZZER.h>
-#include <BTS7960.h>
+#include <BTS7960_Motordriver.h>
 #include <LED.h>
 
 /* 
@@ -19,27 +19,27 @@
 #endif
 
 //Led definition section
-const uint8_t redLedPin = A4;  //use between 150 ohms to 330 ohms resistor
-const uint8_t blueLedPin = 3;
+constexpr uint8_t redLedPin = A4;  //use between 150 ohms to 330 ohms resistor
+constexpr uint8_t blueLedPin = 3;
 
 //Buzzer definition section
 #define buzzpin 2 //Active buzzer use 100 ohms resistor
 
 //BTS7960 motor driver 2 pin definitions
-const uint8_t R_EN1 = 7;  
-const uint8_t L_EN1 = 8;
-const uint8_t RPWM1 = 6;    //PWM 490hz
-const uint8_t LPWM1 = 5;    //PWM 980hz
-//const uint8_t R_IS1       //Alarm pin
-//const uint8_t L_IS1       //Alarm pin
+constexpr uint8_t R_EN1 = 7;  
+constexpr uint8_t L_EN1 = 8;
+constexpr uint8_t RPWM1 = 6;    //PWM 490hz
+constexpr uint8_t LPWM1 = 5;    //PWM 980hz
+//constexpr uint8_t R_IS1       //Alarm pin
+//constexpr uint8_t L_IS1       //Alarm pin
 
 //BTS7960 motor driver 2 pin definitions
-const uint8_t R_EN2 = A0;
-const uint8_t L_EN2 = A1;
-const uint8_t RPWM2 = 9;       //PWM 980hz
-const uint8_t LPWM2 = 10;      //PWM 490hz
-//const uint8_t R_IS2        //Alarm pin
-//const uint8_t L_IS2        //Alarm pin                                                     //Key for the switch case
+constexpr uint8_t R_EN2 = A0;
+constexpr uint8_t L_EN2 = A1;
+constexpr uint8_t RPWM2 = 9;       //PWM 980hz
+constexpr uint8_t LPWM2 = 10;      //PWM 490hz
+//constexpr uint8_t R_IS2        //Alarm pin
+//constexpr uint8_t L_IS2        //Alarm pin                                                     //Key for the switch case
 
 /*=====================================================  Object declaration=============================================================*/
 BTS7960 motor1(L_EN1, R_EN1, LPWM1, RPWM1);                           //Create an object of class motor1
