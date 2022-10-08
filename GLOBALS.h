@@ -82,6 +82,8 @@ enum class motorStates : uint8_t
    SPEED9 = '9',
    MAXSPEED = 'q'
 };
+motorStates motorStatus = motorStates::STOPALL;                   //State variable set to STOP initially
+//motorStates motorPrevStatus;                                    //Previous motor state
 
 enum class buzzStates : uint8_t
 {
@@ -89,6 +91,7 @@ enum class buzzStates : uint8_t
   ON,
   PASS
 };
+buzzStates buzzStatus = buzzStates::PASS;                         //Buzzer state initilally is set to pass
 
 enum class ledStates : uint8_t
 {
@@ -96,10 +99,6 @@ enum class ledStates : uint8_t
   RUN,
   PASS
 };
-
-motorStates motorStatus = motorStates::STOPALL;                   //State variable set to STOP initially
-//motorStates motorPrevStatus;                                    //Previous motor state
-buzzStates buzzStatus = buzzStates::PASS;                         //Buzzer state initilally is set to pass
 ledStates ledStatus = ledStates::PASS;                            //Led state initilally is set to pass
 
 /*==================================================Function prototyping section========================================================*/
